@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ریاضی بازی | آموزش ریاضی بچه‌ها</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#4ecdc4">
+    <meta name="description" content="آموزش ریاضی برای بچه‌های ۵-۷ ساله">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        body {
+            font-family: 'Vazir', 'Tahoma', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            touch-action: manipulation;
+        }
+        body.dark-theme {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+        .app-container {
+            max-width: 100%;
+            margin: 0 auto;
+            min-height: 100vh;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 -5px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        body.dark-theme .app-container {
+            background: rgba(30, 30, 46, 0.95);
+            color: #e2e8f0;
+        }
+        /* Header */
+        .app-header {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        body.dark-theme .app-header {
+            background: linear-gradient(45deg, #8b5cf6, #6366f1);
+        }
+        .app-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        .app-subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            background: #4ecdc4;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        body.dark-theme .nav-tabs {
+            background: #0ea5e9;
+        }
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+        .nav-tab {
+            flex: 1;
+            min-width: 80px;
+            padding: 12px 5px;
+            text-align: center;
+            color: white;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        .nav-tab.active {
+            background: rgba(255, 255, 255, 0.2);
+            border-bottom: 3px solid #fff;
+            font-weight: bold;
+        }
+        .nav-tab i {
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        /* Main Content */
+        .main-content {
+            padding: 20px;
+            min-height: calc(100vh - 150px);
+        }
+        .screen {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        .screen.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        body.dark-theme .section-title {
+            color: #e2e8f0;
+        }
+        .section-title i {
+            margin-left: 10px;
+        }
+        /* Game Cards */
+        .game-cards {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        body.dark-theme .game-card {
+            background: #1e293b;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: #4ecdc4;
+        }
+        body.dark-theme .game-card:hover {
+            border-color: #0ea5e9;
+        }
+        .game-card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .game-card-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        body.dark-theme .game-card-title {
+            color: #e2e8f0;
+        }
+        .game-card-desc {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            text-align: center;
+            line-height: 1.4;
+        }
+        body.dark-theme .game-card-desc {
+            color: #94a3b8;
+        }
+        /* Game Area */
+        .game-area {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        body.dark-theme .game-area {
+            background: #1e293b;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .problem-display {
+            font-size: 2rem;
+            text-align: center;
+            margin: 20px 0;
+            color: #2c3e50;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            direction: ltr; /* اعداد و علامت‌های ریاضی از چپ به راست */
+            unicode-bidi: embed;
+        }
+        body.dark-theme .problem-display {
+            color: #e2e8f0;
+        }
+        .answer-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 2px solid #4ecdc4;
+            border-radius: 10px;
+            margin: 15px 0;
+            outline: none;
+            background: white;
+            color: #2c3e50;
+        }
+        body.dark-theme .answer-input {
+            border-color: #0ea5e9;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+        .answer-input:focus {
+            border-color: #ff6b6b;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+        }
+        body.dark-theme .answer-input:focus {
+            border-color: #f87171;
+            box-shadow: 0 0 10px rgba(248, 113, 113, 0.3);
+        }
+        .check-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #4ecdc4, #44a08d);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        body.dark-theme .check-btn {
+            background: linear-gradient(45deg, #0ea5e9, #0284c7);
+        }
+        .check-btn:active {
+            transform: scale(0.98);
+        }
+        .result-message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-weight: bold;
+            display: none;
+        }
+        .result-correct {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        body.dark-theme .result-correct {
+            background: #14532d;
+            color: #bbf7d0;
+            border: 1px solid #166534;
+        }
+        .result-incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        body.dark-theme .result-incorrect {
+            background: #7f1d1d;
+            color: #fecaca;
+            border: 1px solid #991b1b;
+        }
+        /* Progress */
+        .progress-container {
+            background: #ecf0f1;
+            border-radius: 10px;
+            height: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        body.dark-theme .progress-container {
+            background: #334155;
+        }
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        body.dark-theme .progress-bar {
+            background: linear-gradient(45deg, #f87171, #ea580c);
+        }
+        .score-display {
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 10px 0;
+        }
+        body.dark-theme .score-display {
+            color: #e2e8f0;
+        }
+        /* Numbers Counting */
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .number-btn {
+            aspect-ratio: 1;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        body.dark-theme .number-btn {
+            background: linear-gradient(45deg, #4f46e5, #7c3aed);
+        }
+        .number-btn:active {
+            transform: scale(0.95);
+        }
+        .count-display {
+            text-align: center;
+            font-size: 1.5rem;
+            margin: 20px 0;
+            min-height: 50px;
+            color: #2c3e50;
+        }
+        body.dark-theme .count-display {
+            color: #e2e8f0;
+        }
+        /* Patterns - بهبود یافته */
+        .pattern-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .pattern-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            margin: 20px auto;
+            max-width: 300px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #4ecdc4;
+        }
+        body.dark-theme .pattern-grid {
+            background: #0f172a;
+            border-color: #0ea5e9;
+        }
+        .pattern-cell {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        body.dark-theme .pattern-cell {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .pattern-cell.question {
+            background: #ff6b6b;
+            color: white;
+            animation: pulse 1s infinite;
+            border: 2px dashed white;
+        }
+        body.dark-theme .pattern-cell.question {
+            background: #f87171;
+            border-color: #fecaca;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        /* Pattern Options */
+        .pattern-options {
+            display: none;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 10px;
+        }
+        body.dark-theme .pattern-options {
+            background: #1e293b;
+        }
+        .pattern-option-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #7f8c8d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+        body.dark-theme .pattern-option-btn {
+            border-color: #64748b;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .pattern-option-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        body.dark-theme .pattern-option-btn:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        .pattern-option-btn.selected {
+            transform: scale(1.15);
+            box-shadow: 0 0 15px rgba(78, 205, 196, 0.8);
+            border-color: #4ecdc4;
+        }
+        body.dark-theme .pattern-option-btn.selected {
+            box-shadow: 0 0 15px rgba(14, 165, 233, 0.8);
+            border-color: #0ea5e9;
+        }
+        /* Magic Grid */
+        .magic-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 20px auto;
+            max-width: 300px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e84393;
+        }
+        body.dark-theme .magic-grid {
+            background: #0f172a;
+            border-color: #db2777;
+        }
+        .magic-cell {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        body.dark-theme .magic-cell {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .magic-cell.question {
+            background: #e84393;
+            color: white;
+            animation: pulse 1s infinite;
+            border: 2px dashed white;
+        }
+        body.dark-theme .magic-cell.question {
+            background: #db2777;
+            border-color: #fbcfe8;
+        }
+        .magic-cell-options {
+            display: none;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-radius: 10px;
+        }
+        body.dark-theme .magic-cell-options {
+            background: #1e293b;
+        }
+        .magic-option-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #7f8c8d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+        body.dark-theme .magic-option-btn {
+            border-color: #64748b;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .magic-option-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        body.dark-theme .magic-option-btn:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+        .magic-option-btn.selected {
+            transform: scale(1.15);
+            box-shadow: 0 0 15px rgba(232, 67, 147, 0.8);
+            border-color: #e84393;
+        }
+        body.dark-theme .magic-option-btn.selected {
+            box-shadow: 0 0 15px rgba(219, 39, 119, 0.8);
+            border-color: #db2777;
+        }
+        /* Colors for pattern cells */
+        .red { background: linear-gradient(45deg, #ff6b6b, #ee5a24); color: white; }
+        .blue { background: linear-gradient(45deg, #3498db, #2980b9); color: white; } /* آبی پررنگ آسمانی */
+        .green { background: linear-gradient(45deg, #2ed573, #1dd1a1); color: white; }
+        .yellow { background: linear-gradient(45deg, #f1c40f, #f39c12); color: #2c3e50; }
+        .purple { background: linear-gradient(45deg, #6c5ce7, #a29bfe); color: white; }
+        .orange { background: linear-gradient(45deg, #ff9f43, #ff6b6b); color: white; }
+        /* Back Button */
+        .back-btn {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        body.dark-theme .back-btn {
+            background: #64748b;
+        }
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        body.dark-theme .theme-toggle {
+            background: rgba(30, 30, 46, 0.2);
+            border-color: #475569;
+        }
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: white;
+        }
+        /* Responsive */
+        @media (min-width: 768px) {
+            .game-cards {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .numbers-grid {
+                grid-template-columns: repeat(10, 1fr);
+            }
+        }
+        /* Animations */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        .bounce {
+            animation: bounce 1s ease;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .pulse {
+            animation: pulse 0.5s ease;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .shake {
+            animation: shake 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <h1 class="app-title">🎮 ریاضی بازی</h1>
+            <p class="app-subtitle">آموزش ریاضی برای بچه‌های ۵-۷ ساله</p>
+        </div>
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-screen="home">
+                <i class="fas fa-home"></i>
+                <span>خانه</span>
+            </div>
+            <div class="nav-tab" data-screen="numbers">
+                <i class="fas fa-sort-numeric-up"></i>
+                <span>اعداد</span>
+            </div>
+            <div class="nav-tab" data-screen="addition">
+                <i class="fas fa-plus"></i>
+                <span>جمع</span>
+            </div>
+            <div class="nav-tab" data-screen="subtraction">
+                <i class="fas fa-minus"></i>
+                <span>تفریق</span>
+            </div>
+            <div class="nav-tab" data-screen="patterns">
+                <i class="fas fa-puzzle-piece"></i>
+                <span>الگوها</span>
+            </div>
+            <div class="nav-tab" data-screen="magic-grid">
+                <i class="fas fa-th-large"></i>
+                <span>جدول شگفت انگیز</span>
+            </div>
+        </div>
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Home Screen -->
+            <div class="screen active" id="home-screen">
+                <h2 class="section-title"><i class="fas fa-star"></i> بازی‌های ریاضی</h2>
+                <div class="game-cards">
+                    <div class="game-card" onclick="showScreen('numbers')">
+                        <div class="game-card-icon">
+                            <i class="fas fa-sort-numeric-up" style="color: #ff6b6b;"></i>
+                        </div>
+                        <h3 class="game-card-title">شمارش اعداد</h3>
+                        <p class="game-card-desc">یادگیری شمارش اعداد ۱ تا ۲۰ با تصاویر جذاب</p>
+                    </div>
+                    <div class="game-card" onclick="showScreen('addition')">
+                        <div class="game-card-icon">
+                            <i class="fas fa-plus" style="color: #4ecdc4;"></i>
+                        </div>
+                        <h3 class="game-card-title">جمع کردن</h3>
+                        <p class="game-card-desc">حل مسائل جمع ساده با اعداد ۱ تا ۱۰</p>
+                    </div>
+                    <div class="game-card" onclick="showScreen('subtraction')">
+                        <div class="game-card-icon">
+                            <i class="fas fa-minus" style="color: #ffd93d;"></i>
+                        </div>
+                        <h3 class="game-card-title">تفریق کردن</h3>
+                        <p class="game-card-desc">تمرین تفریق با اعداد مناسب سنی</p>
+                    </div>
+                    <div class="game-card" onclick="showScreen('patterns')">
+                        <div class="game-card-icon">
+                            <i class="fas fa-puzzle-piece" style="color: #6c5ce7;"></i>
+                        </div>
+                        <h3 class="game-card-title">الگوهای رنگی و شکلی</h3>
+                        <p class="game-card-desc">تشخیص و ادامه دادن الگوهای رنگی و شکلی</p>
+                    </div>
+                     <div class="game-card" onclick="showScreen('magic-grid')">
+                        <div class="game-card-icon">
+                            <i class="fas fa-th-large" style="color: #e84393;"></i>
+                        </div>
+                        <h3 class="game-card-title">جدول شگفت انگیز</h3>
+                        <p class="game-card-desc">تشخیص الگوهای پیچیده در جدول ۴×۴</p>
+                    </div>
+                </div>
+                <div class="game-area">
+                    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 15px;">
+                        <i class="fas fa-trophy"></i> پیشرفت شما
+                    </h3>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="overall-progress" style="width: 0%"></div>
+                    </div>
+                    <div class="score-display">
+                        <i class="fas fa-star" style="color: #ffd700;"></i>
+                        امتیاز کل: <span id="total-score">۰</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Numbers Screen -->
+            <div class="screen" id="numbers-screen">
+                <h2 class="section-title"><i class="fas fa-sort-numeric-up"></i> شمارش اعداد</h2>
+                <div class="game-area">
+                    <p style="text-align: center; margin-bottom: 20px; color: #7f8c8d;">
+                        روی اعداد کلیک کن تا بشماریم!
+                    </p>
+                    <div class="numbers-grid">
+                        <button class="number-btn" onclick="countNumber(1)">۱</button>
+                        <button class="number-btn" onclick="countNumber(2)">۲</button>
+                        <button class="number-btn" onclick="countNumber(3)">۳</button>
+                        <button class="number-btn" onclick="countNumber(4)">۴</button>
+                        <button class="number-btn" onclick="countNumber(5)">۵</button>
+                        <button class="number-btn" onclick="countNumber(6)">۶</button>
+                        <button class="number-btn" onclick="countNumber(7)">۷</button>
+                        <button class="number-btn" onclick="countNumber(8)">۸</button>
+                        <button class="number-btn" onclick="countNumber(9)">۹</button>
+                        <button class="number-btn" onclick="countNumber(10)">۱۰</button>
+                        <button class="number-btn" onclick="countNumber(11)">۱۱</button>
+                        <button class="number-btn" onclick="countNumber(12)">۱۲</button>
+                        <button class="number-btn" onclick="countNumber(13)">۱۳</button>
+                        <button class="number-btn" onclick="countNumber(14)">۱۴</button>
+                        <button class="number-btn" onclick="countNumber(15)">۱۵</button>
+                        <button class="number-btn" onclick="countNumber(16)">۱۶</button>
+                        <button class="number-btn" onclick="countNumber(17)">۱۷</button>
+                        <button class="number-btn" onclick="countNumber(18)">۱۸</button>
+                        <button class="number-btn" onclick="countNumber(19)">۱۹</button>
+                        <button class="number-btn" onclick="countNumber(20)">۲۰</button>
+                    </div>
+                    <div class="count-display" id="count-display">
+                        عدد را انتخاب کن تا بشماریم! 🎯
+                    </div>
+                </div>
+                <button class="back-btn" onclick="showScreen('home')">
+                    <i class="fas fa-arrow-right"></i> بازگشت به خانه
+                </button>
+            </div>
+            <!-- Addition Screen -->
+            <div class="screen" id="addition-screen">
+                <h2 class="section-title"><i class="fas fa-plus"></i> جمع کردن</h2>
+                <div class="game-area">
+                    <div class="problem-display" id="addition-problem">
+                        ۳ + ۲ = ?
+                    </div>
+                    <input type="number" class="answer-input" id="addition-answer" placeholder="جواب را بنویس">
+                    <button class="check-btn" onclick="checkAddition()">
+                        <i class="fas fa-check"></i> بررسی جواب
+                    </button>
+                    <div class="result-message" id="addition-result"></div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="addition-progress" style="width: 0%"></div>
+                    </div>
+                    <div class="score-display">
+                        <i class="fas fa-star" style="color: #4ecdc4;"></i>
+                        امتیاز: <span id="addition-score">۰</span>
+                    </div>
+                </div>
+                <button class="back-btn" onclick="showScreen('home')">
+                    <i class="fas fa-arrow-right"></i> بازگشت به خانه
+                </button>
+            </div>
+            <!-- Subtraction Screen -->
+            <div class="screen" id="subtraction-screen">
+                <h2 class="section-title"><i class="fas fa-minus"></i> تفریق کردن</h2>
+                <div class="game-area">
+                    <div class="problem-display" id="subtraction-problem">
+                        ۵ - ۲ = ?
+                    </div>
+                    <input type="number" class="answer-input" id="subtraction-answer" placeholder="جواب را بنویس">
+                    <button class="check-btn" onclick="checkSubtraction()">
+                        <i class="fas fa-check"></i> بررسی جواب
+                    </button>
+                    <div class="result-message" id="subtraction-result"></div>
+                    <div class="progress-container">
+                        <div class="progress-bar" id="subtraction-progress" style="width: 0%"></div>
+                    </div>
+                    <div class="score-display">
+                        <i class="fas fa-star" style="color: #ffd93d;"></i>
+                        امتیاز: <span id="subtraction-score">۰</span>
+                    </div>
+                </div>
+                <button class="back-btn" onclick="showScreen('home')">
+                    <i class="fas fa-arrow-right"></i> بازگشت به خانه
+                </button>
+            </div>
+            <!-- Patterns Screen - بهبود یافته -->
+            <div class="screen" id="patterns-screen">
+                <h2 class="section-title"><i class="fas fa-puzzle-piece"></i> الگوهای رنگی و شکلی</h2>
+                <div class="game-area">
+                    <p style="text-align: center; margin-bottom: 20px; color: #7f8c8d;">
+                        الگو را تشخیص بده و خانه بعدی را انتخاب کن!
+                    </p>
+                    <div class="pattern-container">
+                        <h3 style="color: #2c3e50; margin-bottom: 10px;">الگوی رنگی</h3>
+                        <div class="pattern-grid" id="color-pattern-grid"></div>
+                        <div class="result-message" id="color-pattern-result"></div>
+                    </div>
+                    <div class="pattern-container">
+                        <h3 style="color: #2c3e50; margin-bottom: 10px;">الگوی شکلی</h3>
+                        <div class="pattern-grid" id="shape-pattern-grid"></div>
+                        <div class="result-message" id="shape-pattern-result"></div>
+                    </div>
+                     <!-- Pattern Options (Hidden by default) -->
+                     <div class="pattern-options" id="pattern-options">
+                        <div class="pattern-option-btn red" data-value="red"></div>
+                        <div class="pattern-option-btn blue" data-value="blue"></div>
+                        <div class="pattern-option-btn green" data-value="green"></div>
+                        <div class="pattern-option-btn yellow" data-value="yellow"></div>
+                        <div class="pattern-option-btn purple" data-value="purple"></div>
+                        <div class="pattern-option-btn orange" data-value="orange"></div>
+                    </div>
+                </div>
+                <button class="back-btn" onclick="showScreen('home')">
+                    <i class="fas fa-arrow-right"></i> بازگشت به خانه
+                </button>
+            </div>
+            <!-- Magic Grid Screen -->
+            <div class="screen" id="magic-grid-screen">
+                <h2 class="section-title"><i class="fas fa-th-large"></i> جدول شگفت انگیز</h2>
+                <div class="game-area">
+                    <p style="text-align: center; margin-bottom: 20px; color: #7f8c8d;">
+                        الگو را تشخیص بده و خانه‌های خالی را پر کن!
+                    </p>
+                    <div class="pattern-container">
+                        <h3 style="color: #2c3e50; margin-bottom: 10px;">جدول شگفت انگیز</h3>
+                        <div class="magic-grid" id="magic-grid"></div>
+                        <div class="result-message" id="magic-grid-result"></div>
+                    </div>
+                    <!-- Magic Grid Options (Hidden by default) -->
+                    <div class="magic-cell-options" id="magic-cell-options">
+                        <div class="magic-option-btn red" data-value="red"></div>
+                        <div class="magic-option-btn blue" data-value="blue"></div>
+                        <div class="magic-option-btn green" data-value="green"></div>
+                        <div class="magic-option-btn yellow" data-value="orange"></div>
+                    </div>
+                </div>
+                <button class="back-btn" onclick="showScreen('home')">
+                    <i class="fas fa-arrow-right"></i> بازگشت به خانه
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Theme Toggle Button -->
+    <div class="theme-toggle" id="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </div>
+    <script>
+        // تابع تبدیل اعداد انگلیسی به فارسی
+        function toPersianNumber(number) {
+            const persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return number.toString().replace(/[0-9]/g, function(w) {
+                return persianNumbers[+w];
+            });
+        }
+        // متغیرهای عمومی
+        let currentScreen = 'home';
+        let scores = {
+            addition: 0,
+            subtraction: 0,
+            total: 0
+        };
+        let currentAddition = {};
+        let currentSubtraction = {};
+        let currentColorPattern = [];
+        let currentShapePattern = [];
+        let correctColorAnswer = '';
+        let correctShapeAnswer = '';
+        let activePatternGrid = ''; // 'color' or 'shape'
+        // Magic Grid variables
+        let magicGridPattern = [];
+        let magicGridCorrectAnswers = {};
+        let currentQuestionCellIndex = null;
+        let isDarkTheme = false;
+        // نمایش صفحه
+        function showScreen(screenName) {
+            // مخفی کردن تمام صفحات
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            // نمایش صفحه انتخاب شده
+            document.getElementById(screenName + '-screen').classList.add('active');
+            // به‌روزرسانی تب‌های ناوبری
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+                if (tab.dataset.screen === screenName) {
+                    tab.classList.add('active');
+                }
+            });
+            currentScreen = screenName;
+            // تولید مسائل جدید برای صفحات بازی
+            if (screenName === 'addition') {
+                generateAdditionProblem();
+            } else if (screenName === 'subtraction') {
+                generateSubtractionProblem();
+            } else if (screenName === 'patterns') {
+                generateColorPattern();
+                generateShapePattern();
+                // مخفی کردن گزینه‌ها در ابتدا
+                document.getElementById('pattern-options').style.display = 'none';
+            } else if (screenName === 'magic-grid') {
+                 generateMagicGridPattern();
+                 // مخفی کردن گزینه‌ها در ابتدا
+                 document.getElementById('magic-cell-options').style.display = 'none';
+            } else {
+                 document.getElementById('pattern-options').style.display = 'none';
+                 document.getElementById('magic-cell-options').style.display = 'none';
+            }
+        }
+        // شمارش اعداد
+        function countNumber(num) {
+            let emojis = ['🎈', '⭐', '🍎', '🍕', '🎮', '🎨', '📚', '🎯', '🎪', '🎪'];
+            let randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+            let result = '';
+            for (let i = 1; i <= num; i++) {
+                result += randomEmoji + ' ';
+                if (i % 5 === 0) result += '<br>';
+            }
+            document.getElementById('count-display').innerHTML =
+                `عدد ${toPersianNumber(num)}:<br>${result}`;
+            // افکت انیمیشن
+            document.getElementById('count-display').classList.add('bounce');
+            setTimeout(() => {
+                document.getElementById('count-display').classList.remove('bounce');
+            }, 1000);
+        }
+        // تولید مسئله جمع
+        function generateAdditionProblem() {
+            const num1 = Math.floor(Math.random() * 8) + 1;
+            const num2 = Math.floor(Math.random() * (10 - num1)) + 1;
+            currentAddition = { num1, num2, answer: num1 + num2 };
+            document.getElementById('addition-problem').textContent = `${toPersianNumber(num1)} + ${toPersianNumber(num2)} = ?`;
+            document.getElementById('addition-answer').value = '';
+            document.getElementById('addition-result').style.display = 'none';
+        }
+        // تولید مسئله تفریق
+        function generateSubtractionProblem() {
+            const num1 = Math.floor(Math.random() * 9) + 2;
+            const num2 = Math.floor(Math.random() * (num1 - 1)) + 1;
+            currentSubtraction = { num1, num2, answer: num1 - num2 };
+            document.getElementById('subtraction-problem').textContent = `${toPersianNumber(num1)} - ${toPersianNumber(num2)} = ?`;
+            document.getElementById('subtraction-answer').value = '';
+            document.getElementById('subtraction-result').style.display = 'none';
+        }
+        // بررسی جمع
+        function checkAddition() {
+            const userAnswer = parseInt(document.getElementById('addition-answer').value);
+            const resultDiv = document.getElementById('addition-result');
+            if (isNaN(userAnswer)) {
+                resultDiv.textContent = 'لطفاً یک عدد وارد کن!';
+                resultDiv.className = 'result-message result-incorrect';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            if (userAnswer === currentAddition.answer) {
+                resultDiv.textContent = '🎉 عالی! جواب درسته!';
+                resultDiv.className = 'result-message result-correct';
+                scores.addition += 10;
+                scores.total += 10;
+                updateScores();
+                setTimeout(() => {
+                    generateAdditionProblem();
+                    resultDiv.style.display = 'none';
+                }, 1500);
+            } else {
+                resultDiv.textContent = `🤔 جواب درست: ${toPersianNumber(currentAddition.answer)} بود`;
+                resultDiv.className = 'result-message result-incorrect';
+            }
+            resultDiv.style.display = 'block';
+            resultDiv.classList.add('pulse');
+            setTimeout(() => {
+                resultDiv.classList.remove('pulse');
+            }, 500);
+        }
+        // بررسی تفریق
+        function checkSubtraction() {
+            const userAnswer = parseInt(document.getElementById('subtraction-answer').value);
+            const resultDiv = document.getElementById('subtraction-result');
+            if (isNaN(userAnswer)) {
+                resultDiv.textContent = 'لطفاً یک عدد وارد کن!';
+                resultDiv.className = 'result-message result-incorrect';
+                resultDiv.style.display = 'block';
+                return;
+            }
+            if (userAnswer === currentSubtraction.answer) {
+                resultDiv.textContent = '🌟 فوق العاده! جواب درسته!';
+                resultDiv.className = 'result-message result-correct';
+                scores.subtraction += 10;
+                scores.total += 10;
+                updateScores();
+                setTimeout(() => {
+                    generateSubtractionProblem();
+                    resultDiv.style.display = 'none';
+                }, 1500);
+            } else {
+                resultDiv.textContent = `🤔 جواب درست: ${toPersianNumber(currentSubtraction.answer)} بود`;
+                resultDiv.className = 'result-message result-incorrect';
+            }
+            resultDiv.style.display = 'block';
+            resultDiv.classList.add('pulse');
+            setTimeout(() => {
+                resultDiv.classList.remove('pulse');
+            }, 500);
+        }
+        // تولید الگوی رنگی
+        function generateColorPattern() {
+            // تعریف گروه‌های رنگی برای جلوگیری از رنگ‌های نزدیک
+            const colorGroups = [
+                ['red', 'orange'],     // گروه گرم
+                ['blue', 'purple'],    // گروه سرد
+                ['green', 'yellow']    // گروه میانی
+            ];
+            
+            const patternLength = Math.floor(Math.random() * 3) + 3; // طول الگو ۳ تا ۵
+            
+            // انتخاب نوع الگو
+            const patternTypes = [
+                // الگوی ABAB - از گروه‌های مختلف
+                () => {
+                    const group1 = colorGroups[Math.floor(Math.random() * colorGroups.length)];
+                    let group2;
+                    do {
+                        group2 = colorGroups[Math.floor(Math.random() * colorGroups.length)];
+                    } while (group2 === group1);
+                    
+                    const color1 = group1[Math.floor(Math.random() * group1.length)];
+                    const color2 = group2[Math.floor(Math.random() * group2.length)];
+                    return [color1, color2, color1, color2, color1, color2];
+                },
+                // الگوی ABC - از ۳ گروه مختلف
+                () => {
+                    // دریافت سه گروه مختلف
+                    const shuffledGroups = [...colorGroups].sort(() => 0.5 - Math.random());
+                    const group1 = shuffledGroups[0];
+                    const group2 = shuffledGroups[1];
+                    const group3 = shuffledGroups[2];
+                    
+                    const color1 = group1[Math.floor(Math.random() * group1.length)];
+                    const color2 = group2[Math.floor(Math.random() * group2.length)];
+                    const color3 = group3[Math.floor(Math.random() * group3.length)];
+                    return [color1, color2, color3, color1, color2, color3];
+                },
+                // الگوی AABAAB - از گروه‌های مختلف
+                () => {
+                    const group1 = colorGroups[Math.floor(Math.random() * colorGroups.length)];
+                    let group2;
+                    do {
+                        group2 = colorGroups[Math.floor(Math.random() * colorGroups.length)];
+                    } while (group2 === group1);
+                    
+                    const color1 = group1[Math.floor(Math.random() * group1.length)];
+                    const color2 = group2[Math.floor(Math.random() * group2.length)];
+                    return [color1, color1, color2, color1, color1, color2];
+                }
+            ];
+            
+            const selectedPatternType = Math.floor(Math.random() * patternTypes.length);
+            const fullPattern = patternTypes[selectedPatternType]();
+            currentColorPattern = fullPattern.slice(0, patternLength);
+            correctColorAnswer = fullPattern[patternLength]; // خانه بعدی
+            
+            // نمایش الگو در گرید
+            const grid = document.getElementById('color-pattern-grid');
+            grid.innerHTML = '';
+            currentColorPattern.forEach((color, index) => {
+                const cell = document.createElement('div');
+                cell.classList.add('pattern-cell', color);
+                grid.appendChild(cell);
+            });
+            // اضافه کردن خانه سوال
+            const questionCell = document.createElement('div');
+            questionCell.classList.add('pattern-cell', 'question');
+            questionCell.textContent = '?';
+            questionCell.addEventListener('click', () => showPatternOptions('color'));
+            grid.appendChild(questionCell);
+            // ریست کردن انتخاب‌ها
+            document.getElementById('color-pattern-result').style.display = 'none';
+        }
+        // تولید الگوی شکلی
+        function generateShapePattern() {
+            // تعریف گروه‌های شکلی برای جلوگیری از شکل‌های نزدیک
+            const shapeGroups = [
+                [
+                    { emoji: '🔴', class: 'red' },
+                    { emoji: '🔺', class: 'red' }
+                ],
+                [
+                    { emoji: '🔵', class: 'blue' },
+                    { emoji: '🔷', class: 'blue' }
+                ],
+                [
+                    { emoji: '🟢', class: 'green' },
+                    { emoji: '🔶', class: 'yellow' } // ترکیبی از دو رنگ متفاوت
+                ]
+            ];
+            
+            const patternLength = Math.floor(Math.random() * 3) + 3; // طول الگو ۳ تا ۵
+            
+            // انتخاب نوع الگو
+            const patternTypes = [
+                // الگوی ABAB - از گروه‌های مختلف
+                () => {
+                    const group1 = shapeGroups[Math.floor(Math.random() * shapeGroups.length)];
+                    let group2;
+                    do {
+                        group2 = shapeGroups[Math.floor(Math.random() * shapeGroups.length)];
+                    } while (group2 === group1);
+                    
+                    const shape1 = group1[Math.floor(Math.random() * group1.length)];
+                    const shape2 = group2[Math.floor(Math.random() * group2.length)];
+                    return [shape1, shape2, shape1, shape2, shape1, shape2];
+                },
+                // الگوی ABC - از ۳ گروه مختلف
+                () => {
+                    // دریافت سه گروه مختلف
+                    const shuffledGroups = [...shapeGroups].sort(() => 0.5 - Math.random());
+                    const group1 = shuffledGroups[0];
+                    const group2 = shuffledGroups[1];
+                    const group3 = shuffledGroups[2];
+                    
+                    const shape1 = group1[Math.floor(Math.random() * group1.length)];
+                    const shape2 = group2[Math.floor(Math.random() * group2.length)];
+                    const shape3 = group3[Math.floor(Math.random() * group3.length)];
+                    return [shape1, shape2, shape3, shape1, shape2, shape3];
+                }
+            ];
+            
+            const selectedPatternType = Math.floor(Math.random() * patternTypes.length);
+            const fullPattern = patternTypes[selectedPatternType]();
+            currentShapePattern = fullPattern.slice(0, patternLength);
+            correctShapeAnswer = fullPattern[patternLength]; // خانه بعدی
+            
+            // نمایش الگو در گرید
+            const grid = document.getElementById('shape-pattern-grid');
+            grid.innerHTML = '';
+            currentShapePattern.forEach(shape => {
+                const cell = document.createElement('div');
+                cell.classList.add('pattern-cell', shape.class);
+                cell.textContent = shape.emoji;
+                grid.appendChild(cell);
+            });
+            // اضافه کردن خانه سوال
+            const questionCell = document.createElement('div');
+            questionCell.classList.add('pattern-cell', 'question');
+            questionCell.textContent = '?';
+            questionCell.addEventListener('click', () => showPatternOptions('shape'));
+            grid.appendChild(questionCell);
+            // ریست کردن انتخاب‌ها
+            document.getElementById('shape-pattern-result').style.display = 'none';
+        }
+        // نمایش گزینه‌های الگو
+        function showPatternOptions(patternType) {
+            activePatternGrid = patternType;
+            const optionsDiv = document.getElementById('pattern-options');
+            optionsDiv.style.display = 'flex';
+            // ریست کردن انتخاب‌های قبلی
+            document.querySelectorAll('.pattern-option-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            // اسکرول به پایین صفحه
+            optionsDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        }
+        // انتخاب گزینه الگو
+        document.querySelectorAll('.pattern-option-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // نمایش انتخاب شده
+                document.querySelectorAll('.pattern-option-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+
+                let resultDiv, correctAnswer, patternTypeDisplay;
+                if (activePatternGrid === 'color') {
+                    resultDiv = document.getElementById('color-pattern-result');
+                    correctAnswer = correctColorAnswer;
+                    patternTypeDisplay = 'رنگی';
+                } else {
+                    resultDiv = document.getElementById('shape-pattern-result');
+                    correctAnswer = correctShapeAnswer.class;
+                    patternTypeDisplay = 'شکلی';
+                }
+
+                const userAnswer = this.dataset.value;
+                const isCorrect = userAnswer === correctAnswer;
+
+                if (isCorrect) {
+                    resultDiv.textContent = `🌈 عالی! الگوی ${patternTypeDisplay} رو فهمیدی!`;
+                    resultDiv.className = 'result-message result-correct';
+                    scores.total += 15;
+                    updateScores();
+                    setTimeout(() => {
+                         document.getElementById('pattern-options').style.display = 'none';
+                        if (activePatternGrid === 'color') {
+                            generateColorPattern();
+                        } else {
+                            generateShapePattern();
+                        }
+                    }, 1500);
+                } else {
+                    resultDiv.textContent = `😊 دوباره امتحان کن! الگوی ${patternTypeDisplay} اشتباه است.`;
+                    resultDiv.className = 'result-message result-incorrect';
+                    resultDiv.classList.add('shake');
+                    setTimeout(() => {
+                        resultDiv.classList.remove('shake');
+                    }, 500);
+                }
+                resultDiv.style.display = 'block';
+                resultDiv.classList.add('pulse');
+                setTimeout(() => {
+                    resultDiv.classList.remove('pulse');
+                }, 500);
+            });
+        });
+        // تولید الگوی جدول شگفت‌انگیز
+        function generateMagicGridPattern() {
+            const colors = ['red', 'blue', 'green', 'yellow'];
+            const shapes = [
+                { emoji: '🔴', class: 'red' },
+                { emoji: '🔵', class: 'blue' },
+                { emoji: '🟢', class: 'green' },
+                { emoji: '🟡', class: 'yellow' }
+            ];
+
+            // Randomly select pattern type (color or shape)
+            const isColorPattern = Math.random() > 0.5;
+            
+            // Create a 4x4 grid with unique patterns in rows and columns
+            const grid = document.getElementById('magic-grid');
+            grid.innerHTML = '';
+            
+            // First, create a valid Latin Square for the grid
+            let latinSquare = createLatinSquare(colors);
+
+            // Then, add missing cells
+            const missingCellsCount = Math.floor(Math.random() * 2) + 2; // 2 to 3 missing cells
+            const missingCells = [];
+
+            while (missingCells.length < missingCellsCount) {
+                const randomIndex = Math.floor(Math.random() * 16);
+                if (!missingCells.includes(randomIndex)) {
+                    missingCells.push(randomIndex);
+                }
+            }
+
+            // Populate the grid
+            magicGridPattern = [];
+            magicGridCorrectAnswers = {};
+
+            for (let i = 0; i < 16; i++) {
+                const cell = document.createElement('div');
+                cell.classList.add('magic-cell');
+
+                if (missingCells.includes(i)) {
+                    cell.classList.add('question');
+                    cell.textContent = '?';
+                    magicGridPattern.push('question');
+                    // Store the correct answer for this cell
+                    magicGridCorrectAnswers[i] = { type: isColorPattern ? 'color' : 'shape', value: latinSquare[Math.floor(i / 4)][i % 4] };
+                } else {
+                    if (isColorPattern) {
+                        cell.classList.add(latinSquare[Math.floor(i / 4)][i % 4]);
+                        magicGridPattern.push(latinSquare[Math.floor(i / 4)][i % 4]);
+                    } else {
+                        const shape = latinSquare[Math.floor(i / 4)][i % 4];
+                        cell.textContent = shape.emoji;
+                        cell.classList.add(shape.class);
+                        magicGridPattern.push(shape.class);
+                    }
+                }
+
+                grid.appendChild(cell);
+            }
+
+            // Reset result message and options
+            document.getElementById('magic-grid-result').style.display = 'none';
+            document.getElementById('magic-cell-options').style.display = 'none';
+        }
+
+        // Create a valid Latin Square
+        function createLatinSquare(items) {
+            const n = items.length;
+            const square = Array.from({ length: n }, () => Array(n).fill(null));
+
+            // Shuffle the first row
+            const firstRow = [...items].sort(() => 0.5 - Math.random());
+            square[0] = firstRow;
+
+            // Fill the rest of the rows
+            for (let i = 1; i < n; i++) {
+                square[i] = [...square[i - 1]];
+                square[i].push(square[i].shift());
+            }
+
+            return square;
+        }
+
+        // Event listener for magic grid cells
+        document.getElementById('magic-grid').addEventListener('click', function(e) {
+            if (e.target.classList.contains('question')) {
+                // Find the index of the clicked cell
+                const cells = Array.from(this.children);
+                currentQuestionCellIndex = cells.indexOf(e.target);
+
+                if (currentQuestionCellIndex !== -1) {
+                    // Show the options for this specific cell
+                    const optionsDiv = document.getElementById('magic-cell-options');
+                    optionsDiv.style.display = 'flex';
+                    optionsDiv.scrollIntoView({ behavior: 'smooth', block: 'end' });
+
+                    // Reset selection
+                    document.querySelectorAll('.magic-option-btn').forEach(btn => {
+                        btn.classList.remove('selected');
+                    });
+                }
+            }
+        });
+
+        // Event listener for magic grid options
+        document.querySelectorAll('.magic-option-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (currentQuestionCellIndex === null) return;
+
+                // Show selection
+                document.querySelectorAll('.magic-option-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+
+                const userAnswer = this.dataset.value;
+                const correctAnswerObj = magicGridCorrectAnswers[currentQuestionCellIndex];
+
+                let isCorrect = false;
+                if (correctAnswerObj.type === 'color') {
+                    isCorrect = userAnswer === correctAnswerObj.value;
+                } else { // shape
+                    isCorrect = userAnswer === correctAnswerObj.value.class;
+                }
+
+                const resultDiv = document.getElementById('magic-grid-result');
+                if (isCorrect) {
+                    resultDiv.textContent = '🌈 عالی! خانه رو درست پر کردی!';
+                    resultDiv.className = 'result-message result-correct';
+                    scores.total += 15;
+                    updateScores();
+
+                    // Update the grid cell visually
+                    const grid = document.getElementById('magic-grid');
+                    const cell = grid.children[currentQuestionCellIndex];
+                    cell.classList.remove('question');
+                    cell.textContent = '';
+                    if (correctAnswerObj.type === 'color') {
+                        cell.classList.add(correctAnswerObj.value);
+                    } else {
+                        cell.textContent = correctAnswerObj.value.emoji;
+                        cell.classList.add(correctAnswerObj.value.class);
+                    }
+
+                    setTimeout(() => {
+                        resultDiv.style.display = 'none';
+                        document.getElementById('magic-cell-options').style.display = 'none';
+                        currentQuestionCellIndex = null;
+
+                        // Check if all questions are answered
+                        const questionCells = grid.querySelectorAll('.question');
+                        if (questionCells.length === 0) {
+                            // All questions answered, generate a new pattern
+                            setTimeout(() => {
+                                generateMagicGridPattern();
+                            }, 1000);
+                        }
+                    }, 1500);
+                } else {
+                    resultDiv.textContent = '😊 دوباره امتحان کن!';
+                    resultDiv.className = 'result-message result-incorrect';
+                    resultDiv.classList.add('shake');
+                    setTimeout(() => {
+                        resultDiv.classList.remove('shake');
+                    }, 500);
+                }
+                resultDiv.style.display = 'block';
+                resultDiv.classList.add('pulse');
+                setTimeout(() => {
+                    resultDiv.classList.remove('pulse');
+                }, 500);
+            });
+        });
+        
+        // به‌روزرسانی امتیازات
+        function updateScores() {
+            document.getElementById('addition-score').textContent = toPersianNumber(scores.addition);
+            document.getElementById('subtraction-score').textContent = toPersianNumber(scores.subtraction);
+            document.getElementById('total-score').textContent = toPersianNumber(scores.total);
+            // به‌روزرسانی نوار پیشرفت
+            const totalProgress = Math.min(100, scores.total / 5);
+            document.getElementById('overall-progress').style.width = totalProgress + '%';
+            document.getElementById('addition-progress').style.width = Math.min(100, scores.addition / 2) + '%';
+            document.getElementById('subtraction-progress').style.width = Math.min(100, scores.subtraction / 2) + '%';
+        }
+        // Event Listeners برای تب‌های ناوبری
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                showScreen(tab.dataset.screen);
+            });
+        });
+        // Event Listener برای Enter در input‌ها
+        document.getElementById('addition-answer').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkAddition();
+            }
+        });
+        document.getElementById('subtraction-answer').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkSubtraction();
+            }
+        });
+        // Theme Toggle
+        function toggleTheme() {
+            isDarkTheme = !isDarkTheme;
+            if (isDarkTheme) {
+                document.body.classList.add('dark-theme');
+                document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                document.body.classList.remove('dark-theme');
+                document.getElementById('theme-toggle').innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        }
+        // شروع برنامه
+        document.addEventListener('DOMContentLoaded', function() {
+            updateScores();
+            // ثبت Service Worker برای PWA
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('./sw.js')
+                        .then((registration) => {
+                            console.log('SW registered: ', registration);
+                        })
+                        .catch((registrationError) => {
+                            console.log('SW registration failed: ', registrationError);
+                        });
+                });
+            }
+        });
+        // جلوگیری از zoom در iOS
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>

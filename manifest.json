@@ -1,0 +1,21 @@
+{
+  "name": "ریاضی بازی",
+  "short_name": "ریاضی بازی",
+  "description": "آموزش ریاضی برای بچه‌های ۵-۷ ساله",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4ecdc4",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
